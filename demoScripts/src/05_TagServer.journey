@@ -1,0 +1,37 @@
+`05_TagServer`(){
+    let demo = "sandboxes/demo"
+    let next_id = 1
+    let tags = load from_json("default_tags.json") from sandbox demo
+    tags.for(tag)=>{
+        let next_id = next_id + 1
+    }
+    listen on 8720 with {
+        //Get Tag By Id
+        on get with url text `/tag/<%id:PositiveInteger%>` {
+            //Default Response
+            let bd = "Not Found"
+            let code = 404
+            //Find Tags
+            tags.for(item)=>{
+                if item.id == id {
+                    let bd = item
+                    let code = 200
+                }
+            }
+            respond with status code and body bd //Respond
+        }
+        //Get All Tags
+        on get with url text `/tag` {
+            respond with body tags //Respond
+        }
+        //Create New Tag
+        on post with url text `/tag`  matching request body object { "name" : name }
+        {
+            let tag = object {"id" : next_id, "name":name}
+            tags.push(tag)
+            let next_id = next_id + 1
+            sync tags to sandbox demo
+            respond with body tag //Respond
+        }
+    }
+}

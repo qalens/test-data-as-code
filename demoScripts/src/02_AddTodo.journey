@@ -1,0 +1,15 @@
+`02_AddTodo`(){
+    let baseURL= text `http://localhost:8731`
+    let todo.name = Todo_Name
+    get request {
+            url: text `<%baseURL%>/tag/`
+    } matching body object tags.for(id) => {"id": id}
+    let todo.tags = unique_random_elements(Number_Of_Random_Tags_To_Add:PositiveInteger,tags)
+    print text `<%todo%>`
+    post request {
+        url: text `<%baseURL%>/todo/`,
+        body:object todo
+    } matching body object resp
+    print text `<%resp%>`
+
+}

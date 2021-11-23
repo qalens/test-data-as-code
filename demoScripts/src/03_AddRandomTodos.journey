@@ -1,0 +1,22 @@
+`03_AddRandomTodos`(){
+    let baseURL= text `http://localhost:8731`
+    get request {
+        url: text `<%baseURL%>/tag/`
+    } matching body object tags.for(id) => { "id": id }
+    Todos_To_Add.for(todo)=>{
+        let todo = object {
+            "name":concat("From Corr ",fake("CompanyName")),
+            "tags": unique_random_elements(
+                random(
+                    Minimum_Number_Of_Tags:PositiveInteger,
+                    Maximum_Number_Of_Tags:PositiveInteger
+                ),
+                tags
+            )
+        }
+        post request {
+            url: text `<%baseURL%>/todo/`,
+            body:object todo
+        }
+    }
+}

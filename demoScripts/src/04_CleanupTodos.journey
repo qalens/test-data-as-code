@@ -1,0 +1,11 @@
+`04_CleanupTodos`(){
+    let baseURL= text `http://localhost:8731/todo/`
+    get request {
+        url:baseURL
+    } matching body object todos.for(todo)=>{ "id" : todo }
+    todos.for(id)=>{
+        delete request {
+            url: text `<%baseURL%><%id%>/`
+        }
+    }
+}

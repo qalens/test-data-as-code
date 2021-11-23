@@ -1,0 +1,9 @@
+`01_AddRandomTags`(){
+    tags.for(tag)=>{
+        post request {
+            url: "http://localhost:8731/tag/",
+            body: object {"name": concat("From Corr ",fake("FirstName"))}
+        } matching body object resp
+        print text `<%resp%>`
+    }
+}

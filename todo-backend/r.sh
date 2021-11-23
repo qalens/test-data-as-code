@@ -1,0 +1,1 @@
+TAGGER_API_URL=http://localhost:8730/tag mvn spring-boot:run
